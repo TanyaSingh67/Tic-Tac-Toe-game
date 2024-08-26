@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,27 +28,51 @@ class homepage extends StatefulWidget {
 class _homepageState extends State<homepage> {
   bool onTurn = true;
   List<String> displayExOh = ['', '', '', '', '', '', '', '', ''];
+  int ohscore = 0;
+  int exxscore = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[800],
-        body: Column(
-          children:<Widget> [
-            Expanded(child: Container(
-              child:const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Player x",style: TextStyle(color: Colors.white,fontSize: 30),),
-                  Text("Player o", style: TextStyle(color: Colors.white,fontSize: 30)),
-                  
-                ],
+        body: Column(children: <Widget>[
+          Expanded(
+              child: Container(
+                  child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(30),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Player x",
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                      Text(exxscore.toString(),
+                          style: TextStyle(color: Colors.white, fontSize: 30)),
+                    ]),
+              ),
+              Padding(
+                padding: EdgeInsets.all(30),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Player o",
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                      Text(ohscore.toString(),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 30)),
+                    ]),
               )
-            
-            )),
-            
-           Expanded(
+            ],
+          ))),
+          Expanded(
             flex: 3,
-             child: GridView.builder(
+            child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3),
               itemCount: 9,
@@ -63,25 +87,24 @@ class _homepageState extends State<homepage> {
                     child: Center(
                       child: Text(
                         displayExOh[index],
-                        style: const TextStyle(fontSize: 40, color: Colors.white),
+                        style:
+                            const TextStyle(fontSize: 40, color: Colors.white),
                       ),
                     ),
-              
                   ),
                 );
               },
-                       ),
-           ),
-
-             Expanded(child: Container()),
+            ),
+          ),
+          Expanded(child: Container()),
         ]));
   }
 
   void _tapped(int index) {
     setState(() {
-      if (onTurn && displayExOh[index]=='') {
+      if (onTurn && displayExOh[index] == '') {
         displayExOh[index] = 'o';
-      } else if(!onTurn && displayExOh[index]=='') {
+      } else if (!onTurn && displayExOh[index] == '') {
         displayExOh[index] = 'x';
       }
 
@@ -140,11 +163,37 @@ class _homepageState extends State<homepage> {
     }
   }
 
-  void _showinDialog(String winne) {
-    showDialog(context: context, builder: (BuildContext context) {
-      return const AlertDialog(
-title: Text('WINNER!'),
-      );
+  void _showinDialog(String winner) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('WINNER Is: ' + winner),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    _clearcode();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    "Play again",
+                  ))
+            ],
+          );
+        });
+    if (winner == 'o') {
+      ohscore += 1;
+    } else if (winner == 'x') {
+      exxscore += 1;
+    }
+  }
+
+  void _clearcode() {
+    setState(() {
+      for (int i = 0; i < 9; i++) {
+        displayExOh[i] = '';
+      }
     });
   }
 }
