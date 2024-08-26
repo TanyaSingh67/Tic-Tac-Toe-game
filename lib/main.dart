@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// ignore: camel_case_types
 class homepage extends StatefulWidget {
   const homepage({super.key});
 
@@ -25,12 +26,13 @@ class homepage extends StatefulWidget {
   State<homepage> createState() => _homepageState();
 }
 
+// ignore: camel_case_types
 class _homepageState extends State<homepage> {
   bool onTurn = true;
   List<String> displayExOh = ['', '', '', '', '', '', '', '', ''];
   int ohscore = 0;
   int exxscore = 0;
-  int filledboxes=0;
+  int filledboxes = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -38,39 +40,38 @@ class _homepageState extends State<homepage> {
         backgroundColor: Colors.grey[800],
         body: Column(children: <Widget>[
           Expanded(
-              child: Container(
-                  child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(30),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Player x",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      ),
-                      Text(exxscore.toString(),
-                          style: TextStyle(color: Colors.white, fontSize: 30)),
-                    ]),
-              ),
-              Padding(
-                padding: EdgeInsets.all(30),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Player o",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      ),
-                      Text(ohscore.toString(),
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 30)),
-                    ]),
-              )
-            ],
-          ))),
+              child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(30),
+                              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Player x",
+                    style: TextStyle(color: Colors.white, fontSize: 30),
+                  ),
+                  Text(exxscore.toString(),
+                      style: const TextStyle(color: Colors.white, fontSize: 30)),
+                ]),
+                            ),
+                            Padding(
+                              padding:const EdgeInsets.all(30),
+                              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Player o",
+                    style: TextStyle(color: Colors.white, fontSize: 30),
+                  ),
+                  Text(ohscore.toString(),
+                      style: const TextStyle(
+                          color: Colors.white, fontSize: 30)),
+                ]),
+                            )
+                          ],
+                        )),
           Expanded(
             flex: 3,
             child: GridView.builder(
@@ -102,15 +103,13 @@ class _homepageState extends State<homepage> {
   }
 
   void _tapped(int index) {
-   
-
     setState(() {
       if (onTurn && displayExOh[index] == '') {
         displayExOh[index] = 'o';
-         filledboxes==1;
+        filledboxes == 1;
       } else if (!onTurn && displayExOh[index] == '') {
         displayExOh[index] = 'x';
-         filledboxes==1;
+        filledboxes == 1;
       }
 
       onTurn = !onTurn;
@@ -165,18 +164,18 @@ class _homepageState extends State<homepage> {
         displayExOh[2] == displayExOh[6] &&
         displayExOh[2] != '') {
       _showinDialog(displayExOh[2]);
-    }
-    else if(filledboxes==9){
+    } else if (filledboxes == 9) {
       _showDrawDialog();
     }
   }
- void _showDrawDialog() {
+
+  void _showDrawDialog() {
     showDialog(
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('DRAW'),
+            title:const Text('DRAW'),
             actions: [
               TextButton(
                   onPressed: () {
@@ -223,7 +222,7 @@ class _homepageState extends State<homepage> {
         displayExOh[i] = '';
       }
     });
+
+    filledboxes=0;
   }
-
 }
-
