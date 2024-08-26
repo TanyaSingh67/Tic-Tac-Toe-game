@@ -30,6 +30,7 @@ class _homepageState extends State<homepage> {
   List<String> displayExOh = ['', '', '', '', '', '', '', '', ''];
   int ohscore = 0;
   int exxscore = 0;
+  int filledboxes=0;
 
   @override
   Widget build(BuildContext context) {
@@ -101,11 +102,15 @@ class _homepageState extends State<homepage> {
   }
 
   void _tapped(int index) {
+   
+
     setState(() {
       if (onTurn && displayExOh[index] == '') {
         displayExOh[index] = 'o';
+         filledboxes==1;
       } else if (!onTurn && displayExOh[index] == '') {
         displayExOh[index] = 'x';
+         filledboxes==1;
       }
 
       onTurn = !onTurn;
@@ -161,6 +166,29 @@ class _homepageState extends State<homepage> {
         displayExOh[2] != '') {
       _showinDialog(displayExOh[2]);
     }
+    else if(filledboxes==9){
+      _showDrawDialog();
+    }
+  }
+ void _showDrawDialog() {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('DRAW'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    _clearcode();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    "Play again",
+                  ))
+            ],
+          );
+        });
   }
 
   void _showinDialog(String winner) {
@@ -196,4 +224,6 @@ class _homepageState extends State<homepage> {
       }
     });
   }
+
 }
+
